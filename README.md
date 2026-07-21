@@ -17,7 +17,7 @@ Ce dépôt contient les outils nécessaires pour lancer rapidement les serveurs 
 
 Grâce à Tampermonkey, l'installation se fait en un clic :
 
-1. Cliquez sur le lien suivant pour ouvrir le script brut : **[INSTALLER LE SCRIPT (cliquez ici)](https://raw.githubusercontent.com/VOTRE_PSEUDO/VOTRE_REPO/main/gitlab-doc-link.user.js)** *(remplacez par votre vrai lien Raw)*.
+1. Cliquez sur le lien suivant pour ouvrir le script brut : **[INSTALLER LE SCRIPT (cliquez ici)](https://github.com/rbages-henix/doc_viewer/raw/refs/heads/main/gitlac-doc-link.user.js)**.
 2. Tampermonkey va s'ouvrir automatiquement. Cliquez sur le bouton **Installer** (ou *Mettre à jour*).
 
 *Désormais, lorsque vous visiterez une Merge Request contenant des fichiers `.md` modifiés dans le dossier `docs/`, un bouton **📖 Doc** apparaîtra à côté de chaque fichier.*
