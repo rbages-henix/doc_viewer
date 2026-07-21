@@ -7,7 +7,7 @@ Ce dépôt contient les outils nécessaires pour lancer rapidement les serveurs 
 
 ## 🛠️ Prérequis
 
-1. Avoir cloné les dépôts `squashtm-doc-fr` et `squashtm-doc-en` dans le **même dossier parent** sur votre machine.
+1. Avoir cloné les dépôts [`squashtm-doc-fr`](https://gitlab.com/henixdevelopment/squash/doc/squashtm-doc-fr) et [`squashtm-doc-en`](https://gitlab.com/henixdevelopment/squash/doc/squashtm-doc-en) dans le **même dossier parent** sur votre machine.
 2. Avoir installé l'extension de navigateur [Tampermonkey](https://www.tampermonkey.net/).
 3. Avoir installé Python et MkDocs (généralement déjà configuré si vous travaillez sur la doc).
 
