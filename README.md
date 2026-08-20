@@ -48,13 +48,13 @@ Pour que les boutons de prévisualisation fonctionnent, vos serveurs locaux MkDo
 
 ### Utilisation :
 1. Double-cliquez simplement sur **`launch-doc.cmd`**.
-2. Répondez à la question : *Utiliser la meme branche pour les deux depots ? (O/N)* :
-   * **Option O (Oui / Entrée)** : Idéal si vos deux dépôts partagent le même nom de branche (ex: `main` ou `doc-tm-15`). Entrez ensuite le nom de la branche commune.
-   * **Option N (Non)** : Utile si vos branches temporaires de Merge Request ont des noms différents en français et en anglais. Saisissez alors le nom de la branche FR, puis le nom de la branche EN.
-3. Le script va automatiquement :
-   * Valider l'existence des branches sur vos dépôts locaux ou distants.
-   * Faire un `git checkout` et un `git pull` pour récupérer les dernières modifications.
-   * Lancer les deux serveurs locaux MkDocs dans des onglets séparés au sein de la même fenêtre de terminal (si vous utilisez *Windows Terminal*).
-4. Vos documentations seront accessibles aux adresses :
+2. Choisissez le mode de lancement :
+   * **[1] (ou Entrée)** : Lancer les **deux serveurs** (Français et Anglais).
+   * **[2] (ou taper `fr`)** : Lancer uniquement la **documentation française** (Port 8000).
+   * **[3] (ou taper `en`)** : Lancer uniquement la **documentation anglaise** (Port 8001).
+3. Renseignez la ou les branches demandées :
+   * Si vous avez choisi les deux serveurs, vous pourrez choisir s'ils partagent le même nom de branche ou des noms distincts.
+   * Si vous n'avez choisi qu'un seul serveur, seule la branche du dépôt concerné vous sera demandée.
+4. Le script valide l'existence des branches, effectue le `git pull`, et ouvre le/les onglet(s) correspondant(s), accessibles aux adresses :
    * Version française : [http://127.0.0.1:8000](http://127.0.0.1:8000)
    * Version anglaise : [http://127.0.0.1:8001](http://127.0.0.1:8001)
