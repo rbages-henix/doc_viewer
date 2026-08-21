@@ -70,46 +70,52 @@
     }
 
     function addDocButtons() {
-        // Recherche des conteneurs de titre de fichier qui n'ont pas encore été traités
-        const containers = document.querySelectorAll('div[data-testid="file-title-container"]:not([data-doc-preview-added])');
+        // Sélecteur plus large pour trouver les en-têtes de fichiers
+        const containers = document.querySelectorAll('div[data-testid="file-title-container"]:not([data-doc-preview-added]), .file-header-content:not([data-doc-preview-added])');
         const localBaseUrl = getLocalBaseUrl();
 
         containers.forEach(container => {
             container.setAttribute('data-doc-preview-added', 'true');
 
-            const filePath = container.getAttribute('data-qa-file-name');
-            if (!filePath || !filePath.startsWith('docs/')) {
+            // Recherche multi-sources pour récupérer le nom du fichier
+            let filePath = container.getAttribute('data-qa-file-name') 
+                        || container.getAttribute('data-file-path')
+                        || container.querySelector('.file-title-name, strong, a.file-header-link')?.innerText?.trim();
+
+            if (!filePath || !filePath.includes('docs/')) {
                 return;
             }
+
+            // Nettoyage au cas où le chemin contienne des espaces ou retours à la ligne
+            filePath = filePath.replace(/^[^\w\/]*/, '').trim();
 
             const isMarkdown = filePath.endsWith('.md');
             const isImage = /\.(png|jpe?g|gif|svg|webp|bmp|tiff)$/i.test(filePath);
 
-            // Si le fichier n'est ni du Markdown ni une image, on l'ignore
             if (!isMarkdown && !isImage) {
                 return;
             }
 
             let relativePath;
             if (isMarkdown) {
-                // Markdown classique : "docs/mon-guide.md" -> "mon-guide.html"
-                relativePath = filePath.replace(/^docs\//, '').replace(/\.md$/, '.html');
+                relativePath = filePath.replace(/^.*?docs\//, '').replace(/\.md$/, '.html');
             } else if (isImage) {
-                // Heuristique pour l'image : on cherche à deviner le dossier parent
-                // "docs/admin-guide/presentation/resources/image.png" -> "docs/admin-guide/presentation/"
                 if (/\/(resources|images|img|assets|pictures|media)\//i.test(filePath)) {
                     relativePath = filePath.replace(/\/(resources|images|img|assets|pictures|media)\/.*$/i, '/');
                 } else {
-                    // Si pas de dossier de ressources standard, on prend juste le dossier parent direct
                     relativePath = filePath.substring(0, filePath.lastIndexOf('/') + 1);
                 }
-                relativePath = relativePath.replace(/^docs\//, '');
+                relativePath = relativePath.replace(/^.*?docs\//, '');
             }
 
             const cleanBaseUrl = localBaseUrl.replace(/\/$/, '');
             const targetUrl = `${cleanBaseUrl}/${relativePath}`;
 
-            const fileActions = container.querySelector('.file-actions');
+            // Recherche élargie de la zone où accrocher le bouton
+            const fileActions = container.closest('.file-holder, .diff-file, [data-testid="diff-file"]')
+                                ?.querySelector('.file-actions, [data-testid="file-actions"]') 
+                             || container.querySelector('.file-actions');
+
             if (!fileActions) return;
 
             const viewedCheckbox = fileActions.querySelector('.gl-form-checkbox');
@@ -122,39 +128,29 @@
             btn.style.display = 'inline-flex';
             btn.style.alignItems = 'center';
             btn.innerHTML = '📖 Doc';
-            btn.title = isImage
-                ? "Ouvre le dossier de l'image (Recherche de la page exacte au survol...)"
+            btn.title = isImage 
+                ? "Ouvre le dossier de l'image (Recherche de la page exacte au survol...)" 
                 : "Ouvrir le rendu de la page";
 
-            // --- Logique asynchrone spécifique aux images au survol (Hover) ---
             if (isImage) {
                 btn.addEventListener('mouseenter', () => {
-                    // On évite de relancer la recherche si elle est déjà faite ou en cours
-                    if (btn.getAttribute('data-precise-found') === 'true' || btn.getAttribute('data-searching') === 'true') {
-                        return;
-                    }
-
+                    if (btn.getAttribute('data-precise-found') === 'true' || btn.getAttribute('data-searching') === 'true') return;
                     btn.setAttribute('data-searching', 'true');
                     const projectId = getProjectId();
-
                     if (projectId) {
                         const filename = filePath.split('/').pop();
                         findMarkdownReferencingImage(projectId, filename).then(mdPath => {
                             btn.setAttribute('data-searching', 'false');
                             if (mdPath) {
-                                // On a trouvé la page exacte ! On met à jour l'URL et l'interface du bouton
-                                const preciseRelativePath = mdPath.replace(/^docs\//, '').replace(/\.md$/, '.html');
+                                const preciseRelativePath = mdPath.replace(/^.*?docs\//, '').replace(/\.md$/, '.html');
                                 btn.href = `${cleanBaseUrl}/${preciseRelativePath}`;
                                 btn.title = `Page exacte trouvée : ${preciseRelativePath}`;
-                                btn.innerHTML = '📖 Doc 🎯'; // Un petit emoji cible pour indiquer la précision
+                                btn.innerHTML = '📖 Doc 🎯';
                                 btn.setAttribute('data-precise-found', 'true');
-                            } else {
-                                btn.title = "Aucune page exacte identifiée. Redirection vers le dossier de l'image.";
-                                btn.setAttribute('data-precise-found', 'false');
                             }
                         });
                     }
-                }, { once: true }); // Ne s'exécute qu'une seule fois par bouton
+                }, { once: true });
             }
 
             if (viewedCheckbox) {
