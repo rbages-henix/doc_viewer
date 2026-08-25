@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         GitLab - Lien direct vers Doc locale
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.6
 // @description  Ajoute un bouton pour ouvrir directement le rendu HTML local d'un fichier doc (.md ou image) modifié dans une Merge Request GitLab (Compatible Rapid Diffs).
 // @author       MonPseudo
 // @match        https://gitlab.com/*
-// @updateURL    https://gitlab.com/henixdevelopment/squash/doc/NOM_DE_VOTRE_REPO/-/raw/main/gitlab-doc-link.user.js
-// @downloadURL  https://gitlab.com/henixdevelopment/squash/doc/NOM_DE_VOTRE_REPO/-/raw/main/gitlab-doc-link.user.js
+// @updateURL    https://github.com/rbages-henix/doc_viewer/raw/refs/heads/main/gitlac-doc-link.user.js
+// @downloadURL  https://github.com/rbages-henix/doc_viewer/raw/refs/heads/main/gitlac-doc-link.user.js
 // @grant        none
 // @run-at       document-idle
 // ==/UserScript==
