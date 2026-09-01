@@ -17,7 +17,7 @@ Ce dépôt contient les outils nécessaires pour lancer rapidement les serveurs 
 
 Grâce à Tampermonkey, l'installation se fait en un seul clic :
 
-1. Cliquez sur le lien suivant pour ouvrir le script brut : **[INSTALLER LE SCRIPT (cliquez ici)](https://gitlab.com/henixdevelopment/squash/doc/VOTRE_PROJET_OUTILS/-/raw/main/gitlab-doc-link.user.js)** *(remplacez par l'URL "Raw" exacte de votre fichier)*.
+1. Cliquez sur le lien suivant pour ouvrir le script brut : **[INSTALLER LE SCRIPT (cliquez ici)](https://gitlab.com/henixdevelopment/squash/doc/VOTRE_PROJET_OUTILS/-/raw/main/gitlab-doc-link.user.js)**
 2. Tampermonkey s'ouvre automatiquement dans votre navigateur. Cliquez sur **Installer** (ou *Mettre à jour*).
 
 ### Fonctionnalités dans vos Merge Requests :
